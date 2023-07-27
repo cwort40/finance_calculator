@@ -18,5 +18,5 @@ def black_scholes_call_option(S, K, T, r, sigma):
     # Calculate Call Option Price
     call = (S * si.norm.cdf(d1, 0.0, 1.0) - K * np.exp(-r * T) * si.norm.cdf(d2, 0.0, 1.0))
 
-    return call
+    return round(call, 3)
 
