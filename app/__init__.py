@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from .utils import black_scholes_call_option
+from .utils import black_scholes_call_option, portfolio_risk_analysis
 
 app = Flask(__name__, template_folder='../templates')
 
@@ -38,5 +38,9 @@ def calculate_option_price():
     return render_template('calculator.html')
 
 
+# TODO: add portfolio risk analysis
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
