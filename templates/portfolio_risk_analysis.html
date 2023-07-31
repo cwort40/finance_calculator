@@ -3,3 +3,31 @@
 {% block title %}
 Portfolio Risk Analysis
 {% endblock %}
+
+{% block content %}
+<form action="/portfolio_risk_analysis" method="post">
+    <div class="form-group">
+        <label for="stocks">Stock Ticker Symbols (comma-separated):</label>
+        <input type="text" id="stocks" name="stocks" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="weights">Weights of Stocks in Portfolio (comma-separated, e.g., 0.5,0.3,0.2):</label>
+        <input type="text" id="weights" name="weights" class="form-control">
+    </div>
+    <input type="submit" value="Calculate" class="btn btn-primary">
+{% if error_message %}
+<div class="alert alert-danger mt-4">
+    {{ error_message }}
+</div>
+{% endif %}
+</form>
+{% if portfolio_risk %}
+<div class="alert alert-success mt-4">
+    The calculated portfolio risk (volatility) is: {{ portfolio_risk }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block modal_info %}
+This calculator analyzes the risk of a portfolio based on the historical data of the selected stocks and their corresponding weights in the portfolio. The risk is measured as the portfolio's volatility, which is the standard deviation of the portfolio's returns. The result provides an indication of the portfolio's overall risk level.
+{% endblock %}
