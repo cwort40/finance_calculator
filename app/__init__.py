@@ -1,41 +1,29 @@
 from flask import Flask, request, render_template
-from .utils import black_scholes_call_option, portfolio_risk_analysis
+
+from blueprints import black_scholes_calculator
+from .utils import portfolio_risk_analysis
 
 app = Flask(__name__, template_folder='../templates')
 
+app.register_blueprint(black_scholes_calculator.black_scholes_calculator)
 
-@app.route('/calculate_option_price', methods=['GET', 'POST'])
-def calculate_option_price():
-    if request.method == 'POST':
-        data = request.get_json() or request.form
-        S, K, T, r, sigma = data.get('S'), data.get('K'), data.get('T'), data.get('r'), data.get('sigma')
 
-        if not all([S, K, T, r, sigma]):
-            error_message = "Please fill in all fields."
-            return render_template('calculator.html', error_message=error_message)
-
-        try:
-            S, K, T, r, sigma = float(S), float(K), float(T), float(r), float(sigma)
-        except ValueError:
-            error_message = "Invalid input. Please ensure all fields are numbers."
-            return render_template('calculator.html', error_message=error_message)
-
-        option_price = black_scholes_call_option(S, K, T, r, sigma)
-        return render_template('calculator.html', option_price=option_price)
-
-    return render_template('calculator.html')
-
+# TODO: figure out why there is a 404 error when running pytest and then configure blueprint to accommodate both http
+#  requests and template requests. then implement a blueprint for the portfolio risk function
 
 @app.route('/portfolio_risk_analysis', methods=['GET', 'POST'])
 def calculate_portfolio_risk():
     if request.method == 'POST':
-        data = request.get_json() or request.form
-        stocks, weights = data.get('stocks'), data.get('weights')
+        # Get form data
+        stocks = request.form.get('stocks')
+        weights = request.form.get('weights')
 
+        # Check if any field is empty
         if not all([stocks, weights]):
             error_message = "Please fill in all fields."
             return render_template('portfolio_risk_analysis.html', error_message=error_message)
 
+        # Convert form data to lists
         try:
             stocks = stocks.split(',')
             weights = [float(weight) for weight in weights.split(',')]
@@ -43,11 +31,14 @@ def calculate_portfolio_risk():
             error_message = "Invalid input. Please ensure all fields are formatted correctly."
             return render_template('portfolio_risk_analysis.html', error_message=error_message)
 
+        # Check if weights sum to 1
         if sum(weights) != 1:
             error_message = "Weights must sum to 1."
             return render_template('portfolio_risk_analysis.html', error_message=error_message)
 
+        # Calculate portfolio risk
         portfolio_risk = portfolio_risk_analysis(stocks, weights)
+
         return render_template('portfolio_risk_analysis.html', portfolio_risk=portfolio_risk)
 
     return render_template('portfolio_risk_analysis.html')
@@ -55,5 +46,3 @@ def calculate_portfolio_risk():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
