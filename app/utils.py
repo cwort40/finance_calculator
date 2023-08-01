@@ -36,9 +36,6 @@ def portfolio_risk_analysis(stocks: list, weights: list) -> float:
     weights = np.array(weights)
     stocks = [s.strip() for s in stocks]
 
-    # Normalize weights if they don't sum to 1
-    weights = weights / np.sum(weights)
-
     try:
         start_date = datetime.now() - timedelta(days=365)
         end_date = datetime.now()
