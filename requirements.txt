@@ -5,3 +5,6 @@ pandas_datareader
 scipy
 yfinance
 pytest
+pynamodb
+flask-login
+werkzeug
