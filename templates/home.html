@@ -1,0 +1,13 @@
+{% extends "basecalculator.html" %}
+
+{% block title %}
+    Welcome to Financial Calculators
+{% endblock %}
+
+{% block content %}
+    <p>Welcome to our financial calculators page! Choose one of the calculators from the navigation menu to get started, or <a href="{{ url_for('auth.login') }}">login</a> if you're a registered user.</p>
+{% endblock %}
+
+{% block modal_info %}
+    Here you can find different calculators for financial analysis, such as the Black-Scholes calculator and the Portfolio Risk calculator.
+{% endblock %}

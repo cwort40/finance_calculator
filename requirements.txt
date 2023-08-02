@@ -8,3 +8,4 @@ pytest
 pynamodb
 flask-login
 werkzeug
+Flask-OAuthlib
