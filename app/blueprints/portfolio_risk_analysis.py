@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template
 
+from blueprints.auth import login_required
 from utils import portfolio_risk_analysis
 
 portfolio_risk_calculator = Blueprint('portfolio_risk_calculator', __name__, template_folder='../templates')
@@ -24,6 +25,7 @@ def api_calculate_portfolio_risk():
 
 
 @portfolio_risk_calculator.route('/portfolio_risk_analysis', methods=['GET', 'POST'])
+@login_required
 def user_calculate_portfolio_risk():
     if request.method == 'POST':
         # Get form data

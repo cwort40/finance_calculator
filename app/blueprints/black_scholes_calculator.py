@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template
 
+from blueprints.auth import login_required
 from utils import black_scholes_call_option
 
 black_scholes_calculator = Blueprint('black_scholes_calculator', __name__, template_folder='../templates')
@@ -22,6 +23,7 @@ def api_calculate_option_price():
 
 
 @black_scholes_calculator.route('/calculate_option_price', methods=['GET', 'POST'])
+@login_required
 def user_calculate_option_price():
     if request.method == 'POST':
         S = request.form.get('S')
