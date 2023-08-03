@@ -67,4 +67,5 @@ def login_required(f):
 def get_google_oauth_token():
     return session.get('google_token')
 
-# TODO: implement session tokens for API
+
+

@@ -6,7 +6,9 @@ from utils import portfolio_risk_analysis
 portfolio_risk_calculator = Blueprint('portfolio_risk_calculator', __name__, template_folder='../templates')
 
 
+# Adding login_required decorator for now, will implement API auth tokens later
 @portfolio_risk_calculator.route('/api/portfolio_risk_analysis', methods=['GET'])
+@login_required
 def api_calculate_portfolio_risk():
     try:
         stocks = request.args.get('stocks').split(',')
