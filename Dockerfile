@@ -15,5 +15,5 @@ COPY . /flaskProject
 EXPOSE 5000
 
 # Commented out line to run on development server
-#CMD ["python", "app/__init__.py"]
+CMD ["python", "app/__init__.py"]
 
