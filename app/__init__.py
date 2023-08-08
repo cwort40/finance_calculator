@@ -7,7 +7,6 @@ from blueprints.black_scholes_calculator import black_scholes_calculator
 from blueprints.portfolio_risk_analysis import portfolio_risk_calculator
 
 
-# TODO: create and build a docker image and set up kubernetes cluster
 def create_app():
     app = Flask(__name__, template_folder='../templates')
     app.secret_key = os.environ.get('SECRET_KEY')

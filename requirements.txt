@@ -6,4 +6,4 @@ scipy
 yfinance
 pytest
 Flask-OAuthlib
-
+gunicorn
