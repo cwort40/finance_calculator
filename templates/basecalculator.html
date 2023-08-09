@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -35,11 +36,10 @@
 
     <div class="container py-5">
         <h1 class="text-center mb-4">{% block title %}{% endblock %}</h1>
+        {% if request.path != '/' %} <!-- how it works modal not necessary on home page -->
         <button type="button" class="btn btn-info mb-3" data-toggle="modal" data-target="#infoModal">
             How does this work?
         </button>
-        
-        {% block content %}{% endblock %}
 
     </div>
 
@@ -63,6 +63,12 @@
             </div>
         </div>
     </div>
+    {% endif %} <!-- end conditional statement for hiding modal on homepage -->
+
+    <div class="container py-1">
+        {% block content %}{% endblock %}
+    </div>
+
 
 </body>
 </html>

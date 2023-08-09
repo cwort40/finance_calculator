@@ -1,0 +1,36 @@
+/* Navbar styles */
+body {
+    background-color: #AFC0E1FF;
+}
+
+.navbar {
+    background-color: #1a2d4e !important;
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: #b8c7d8 !important;
+}
+
+/* Button styles */
+.btn-info {
+    background-color: #5a9bd4;
+    border-color: #5a9bd4;
+}
+
+.btn-info:hover {
+    background-color: #4a8ac4;
+    border-color: #4a8ac4;
+}
+
+/* Modal Header styles */
+.modal-header {
+    background-color: #e6f2ff;
+}
+
+.modal-title {
+    color: #1a2d4e;
+}
