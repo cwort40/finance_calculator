@@ -14,6 +14,7 @@ portfolio_risk_calculator = Blueprint('portfolio_risk_calculator', __name__, tem
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
 table = dynamodb.Table('UserCalculations')
 
+
 # Adding login_required decorator for now, will implement API auth tokens later
 @portfolio_risk_calculator.route('/api/portfolio_risk_analysis', methods=['GET'])
 @login_required

@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('portfolio_risk_calculator.user_calculate_portfolio_risk') }}">Portfolio Risk Calculator</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('previous_calculations') }}">Previous Calculations</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if 'user' not in session %}
@@ -36,7 +39,7 @@
 
     <div class="container py-5">
         <h1 class="text-center mb-4">{% block title %}{% endblock %}</h1>
-        {% if request.path != '/' %} <!-- how it works modal not necessary on home page -->
+        {% if show_modal is not defined or show_modal %} <!-- checks if modal should be shown -->
         <button type="button" class="btn btn-info mb-3" data-toggle="modal" data-target="#infoModal">
             How does this work?
         </button>
@@ -63,7 +66,7 @@
             </div>
         </div>
     </div>
-    {% endif %} <!-- end conditional statement for hiding modal on homepage -->
+    {% endif %} <!-- end conditional statement for whether to show modal -->
 
     <div class="container py-1">
         {% block content %}{% endblock %}

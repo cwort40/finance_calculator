@@ -1,15 +1,11 @@
-{% extends "basecalculator.html" %}
+{% extends "base.html" %}
 
 {% block title %}
     Login
 {% endblock %}
 
 {% block content %}
-    <form action="{{ url_for('auth.login_callback') }}" method="post">
+    <form action="{{ url_for('auth.login_callback') }}" class="text-center" method="post">
         <a href="{{ url_for('auth.google_login') }}" class="btn btn-primary">Login with Google</a>
     </form>
-{% endblock %}
-
-{% block modal_info %}
-    To access the full suite of financial calculators, please log in using your Google account.
 {% endblock %}

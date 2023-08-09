@@ -22,7 +22,7 @@ google = oauth.remote_app(
 
 @auth.route('/login')
 def login():
-    return render_template('login.html')  # Render the login page
+    return render_template('login.html', show_modal=False)  # Render the login page
 
 
 @auth.route('/google_login')
