@@ -1,10 +1,18 @@
-from flask import Blueprint, request, render_template
+import uuid
+from datetime import datetime
+
+import boto3
+from flask import Blueprint, request, render_template, session
 
 from blueprints.auth import login_required
 from utils import portfolio_risk_analysis
 
+from decimal import Decimal
+
 portfolio_risk_calculator = Blueprint('portfolio_risk_calculator', __name__, template_folder='../templates')
 
+dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
+table = dynamodb.Table('UserCalculations')
 
 # Adding login_required decorator for now, will implement API auth tokens later
 @portfolio_risk_calculator.route('/api/portfolio_risk_analysis', methods=['GET'])
@@ -54,6 +62,19 @@ def user_calculate_portfolio_risk():
 
         # Calculate portfolio risk
         portfolio_risk = portfolio_risk_analysis(stocks, weights)
+
+        # Save the calculation to DynamoDB
+        calculation_id = str(uuid.uuid4())
+        table.put_item(
+            Item={
+                'user_id': session['user']['id'],
+                'calculation_id': calculation_id,
+                'calculation_type': 'portfolio_risk',
+                'input_params': str((stocks, weights)),
+                'result': Decimal(str(portfolio_risk)),
+                'created_at': str(datetime.utcnow())
+            }
+        )
 
         return render_template('portfolio_risk_analysis.html', portfolio_risk=portfolio_risk)
 

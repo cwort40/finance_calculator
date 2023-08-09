@@ -1,9 +1,18 @@
-from flask import Blueprint, request, render_template
+import uuid
+from datetime import datetime
+
+import boto3
+from flask import Blueprint, request, render_template, session
 
 from blueprints.auth import login_required
 from utils import black_scholes_call_option
 
+from decimal import Decimal
+
 black_scholes_calculator = Blueprint('black_scholes_calculator', __name__, template_folder='../templates')
+
+dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
+table = dynamodb.Table('UserCalculations')
 
 
 # Adding login_required decorator for now, will implement API auth tokens later
@@ -52,6 +61,19 @@ def user_calculate_option_price():
 
         # Calculate option price
         option_price = black_scholes_call_option(S, K, T, r, sigma)
+
+        # Save the calculation to DynamoDB
+        calculation_id = str(uuid.uuid4())
+        table.put_item(
+            Item={
+                'user_id': session['user']['id'],
+                'calculation_id': calculation_id,
+                'calculation_type': 'portfolio_risk',
+                'input_params': str((S, K, T, r, sigma)),
+                'result': Decimal(str(option_price)),
+                'created_at': str(datetime.utcnow())
+            }
+        )
 
         return render_template('black_scholes_calculator.html', option_price=option_price)
 
