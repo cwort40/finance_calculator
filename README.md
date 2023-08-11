@@ -24,7 +24,6 @@ This is a Python Flask web application that provides financial calculators for o
 
 A Dockerfile is included for containerization and deployment.
 
-
 ## Technologies Used
 
 - Python
