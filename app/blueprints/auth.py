@@ -22,7 +22,7 @@ google = oauth.remote_app(
 
 @auth.route('/login')
 def login():
-    return render_template('login.html', show_modal=False)  # Render the login page
+    return render_template('login.html', show_modal=False)
 
 
 @auth.route('/google_login')
@@ -33,7 +33,7 @@ def google_login():
 @auth.route('/logout')
 def logout():
     session.pop('user')
-    return redirect(url_for('home'))  # Redirect to your home route
+    return redirect(url_for('home'))
 
 
 @auth.route('/login/callback')
@@ -48,9 +48,9 @@ def login_callback():
 
     session['google_token'] = (response['access_token'], '')
     user_info = google.get('userinfo')
-    session['user'] = user_info.data  # You can store user info in session
+    session['user'] = user_info.data
 
-    return redirect(url_for('home'))  # Redirect to the home route
+    return redirect(url_for('home'))
 
 
 def login_required(f):
