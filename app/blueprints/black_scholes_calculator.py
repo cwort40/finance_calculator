@@ -68,7 +68,7 @@ def user_calculate_option_price():
             Item={
                 'user_id': session['user']['id'],
                 'calculation_id': calculation_id,
-                'calculation_type': 'portfolio_risk',
+                'calculation_type': 'option_price',
                 'input_params': str((S, K, T, r, sigma)),
                 'result': Decimal(str(option_price)),
                 'created_at': str(datetime.utcnow())
