@@ -8,3 +8,4 @@ pytest
 Flask-OAuthlib
 virtualenv
 boto3
+Flask-Limiter

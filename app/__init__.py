@@ -6,8 +6,8 @@ from boto3.dynamodb.conditions import Key
 from flask import Flask, render_template, session
 
 from blueprints.auth import auth, login_required
-from blueprints.black_scholes_calculator import black_scholes_calculator
-from blueprints.portfolio_risk_analysis import portfolio_risk_calculator
+from blueprints.black_scholes_calculator import black_scholes_calculator, black_scholes_limiter
+from blueprints.portfolio_risk_analysis import portfolio_risk_calculator, portfolio_risk_limiter
 from data_formatting import get_readable_name, format_input_parameters, format_timestamp
 
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
@@ -22,6 +22,9 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(black_scholes_calculator)
     app.register_blueprint(portfolio_risk_calculator)
+
+    black_scholes_limiter.init_app(app)
+    portfolio_risk_limiter.init_app(app)
 
     @app.route('/')
     def home():

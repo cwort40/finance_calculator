@@ -9,6 +9,12 @@ from utils import black_scholes_call_option
 
 from decimal import Decimal
 
+from flask_limiter.util import get_remote_address
+from flask_limiter import Limiter
+
+
+black_scholes_limiter = Limiter(key_func=get_remote_address)
+
 black_scholes_calculator = Blueprint('black_scholes_calculator', __name__, template_folder='../templates')
 
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
@@ -17,6 +23,7 @@ table = dynamodb.Table('UserCalculations')
 
 # Adding login_required decorator for now, will implement API auth tokens later
 @black_scholes_calculator.route('/api/calculate_option_price', methods=['GET'])
+@black_scholes_limiter.limit("10 per minute")
 def api_calculate_option_price():
     try:
         S = float(request.args.get('S'))

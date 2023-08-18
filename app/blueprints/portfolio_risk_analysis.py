@@ -9,6 +9,11 @@ from utils import portfolio_risk_analysis
 
 from decimal import Decimal
 
+from flask_limiter.util import get_remote_address
+from flask_limiter import Limiter
+
+portfolio_risk_limiter = Limiter(key_func=get_remote_address)
+
 portfolio_risk_calculator = Blueprint('portfolio_risk_calculator', __name__, template_folder='../templates')
 
 dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
@@ -17,6 +22,7 @@ table = dynamodb.Table('UserCalculations')
 
 # Adding login_required decorator for now, will implement API auth tokens later
 @portfolio_risk_calculator.route('/api/portfolio_risk_analysis', methods=['GET'])
+@portfolio_risk_limiter.limit("10 per minute")
 def api_calculate_portfolio_risk():
     try:
         stocks = request.args.get('stocks').split(',')
