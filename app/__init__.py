@@ -5,7 +5,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 from flask import Flask, render_template, session
 
-from blueprints.auth import auth, login_required
+from blueprints.auth import auth, login_required, get_google_oauth_token
 from blueprints.black_scholes_calculator import black_scholes_calculator
 from blueprints.portfolio_risk_analysis import portfolio_risk_calculator
 
@@ -60,6 +60,12 @@ def create_app():
                 calculation['created_at'] = "N/A"
 
         return render_template('previous_calculations.html', previous_calculations=calculations, show_modal=False)
+
+    @app.route('/api_token')
+    @login_required
+    def display_api_token():
+        api_token = get_google_oauth_token()
+        return render_template('api_token.html', api_token=api_token, show_modal=False)
 
     return app
 
