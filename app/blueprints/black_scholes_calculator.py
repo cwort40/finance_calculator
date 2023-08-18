@@ -17,7 +17,6 @@ table = dynamodb.Table('UserCalculations')
 
 # Adding login_required decorator for now, will implement API auth tokens later
 @black_scholes_calculator.route('/api/calculate_option_price', methods=['GET'])
-@login_required
 def api_calculate_option_price():
     try:
         S = float(request.args.get('S'))

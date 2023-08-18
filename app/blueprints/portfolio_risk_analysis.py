@@ -17,7 +17,6 @@ table = dynamodb.Table('UserCalculations')
 
 # Adding login_required decorator for now, will implement API auth tokens later
 @portfolio_risk_calculator.route('/api/portfolio_risk_analysis', methods=['GET'])
-@login_required
 def api_calculate_portfolio_risk():
     try:
         stocks = request.args.get('stocks').split(',')
