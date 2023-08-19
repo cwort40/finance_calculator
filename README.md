@@ -9,7 +9,7 @@ You can view it live here: https://e9vxrnmuws.us-west-2.awsapprunner.com/
 - Black-Scholes options pricing calculator
 - Portfolio risk analysis calculator 
 - Save calculation history to DynamoDB
-- REST API endpoints for calculators
+- REST API endpoints for calculators with rate limiting
 
 ## Usage
 
